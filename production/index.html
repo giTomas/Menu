@@ -9,80 +9,9 @@
     <link rel="stylesheet" href="main.css">
   </head>
   <body>
-    
-    <div class="c-signupLogin___ctrls">
-      <div class="c-signup__open" id="js-signup-open">Registrovať</div>
-      <div class="c-login__open" id="js-login-open">Prihlásiť</div>
-    </div>
-    <div class="c-signup__container" id="js-signup-container" style="display: none">
-      <form class="c-signup__form" id="js-singup" data-url="url" data-username="user">
-        <div class="c-signup__close" id="js-signup-close">
-          <svg fill="#FFFFFF" height="46" viewBox="0 0 24 24" width="46" xmlns="http://www.w3.org/2000/svg">
-            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
-            <path d="M0 0h24v24H0z" fill="none"></path>
-          </svg>
-        </div>
-        <div class="c-signup__field">
-          <input type="text" name="username" required>
-          <label for="user">Uživateľské meno:</label>
-        </div>
-        <div class="c-signup__messages">
-          <div class="c-signup__message" id="js-username-used">
-            <svg fill="#8b0000" height="20" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
-              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
-              <path d="M0 0h24v24H0z" fill="none"></path>
-            </svg>
-            <p>Uživatelské meno je už zaregisrované</p>
-          </div>
-        </div>
-        <div class="c-signup__field">
-          <input type="password" name="password" required>
-          <label for="password">Heslo:</label>
-        </div>
-        <div class="c-signup__field">
-          <input type="password" name="passwordrepeat" required>
-          <label for="passwordrepeat">Zopakovať heslo:</label>
-        </div>
-        <div class="c-signup__messages">
-          <div class="c-signup__message" id="js-password-invalid">
-            <svg fill="#8b0000" height="20" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
-              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
-              <path d="M0 0h24v24H0z" fill="none"></path>
-            </svg>
-            <p>Zadané heslá sa nezhodujú</p>
-          </div>
-        </div>
-        <input type="submit" value="Registrovať">
-      </form>
-    </div>
-    <div class="c-login__container" id="js-login-container" style="display: none">
-      <form class="c-login__form" id="js-login" data-url="url" data-username="user">
-        <div class="c-login__close" id="js-login-close">
-          <svg fill="#FFFFFF" height="46" viewBox="0 0 24 24" width="46" xmlns="http://www.w3.org/2000/svg">
-            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
-            <path d="M0 0h24v24H0z" fill="none"></path>
-          </svg>
-        </div>
-        <div class="c-signup__field">
-          <input type="text" name="username" required>
-          <label for="user">Uživateľské meno:</label>
-        </div>
-        <div class="c-signup__field">
-          <input type="password" name="password" required>
-          <label for="password">Heslo:</label>
-        </div>
-        <div class="c-signup__messages">
-          <div class="c-signup__message" id="js-input-invalid">
-            <svg fill="#8b0000" height="20" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
-              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
-              <path d="M0 0h24v24H0z" fill="none"></path>
-            </svg>
-            <p>Uživateľské meno, alebo heslo boli zadané nesprávne.</p>
-          </div>
-        </div>
-        <input type="submit" value="Prihlásiť">
-      </form>
-    </div>
+    <header id="js-header"></header>
+    <main></main>
+    <footer></footer>
     <script src="js/TweenMax.min.js"></script>
     <script src="js/app.js"></script>
   </body>
