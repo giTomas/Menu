@@ -5,13 +5,12 @@
 
 var Navigation = {
   config: {
+    // tl: new TimelineLite(),
     didScroll: false,
     delta: 5,
     lastScrollTop: 0,
     lastScrollUp: false,
-    lastScrollDown: false,
-    scrollDirectionChanged: false,
-    tl: new TimelineLite()
+    lastScrollDown: false
   },
   dom: {
     nav: document.getElementById('js-nav'),
@@ -24,21 +23,16 @@ var Navigation = {
     if (this.config.didScroll) {
       this.config.didScroll = false;
       this.hasScrolled();
-
-      // console.log(`didScroll(callBackSetInterval): ${this.config.didScroll}`);
     }
   },
   addSetInterval: function addSetInterval() {
     setInterval(this.callbackSetInterval.bind(this), 250);
   },
   scrollUp: function scrollUp() {
-    console.log('scrollUp');
-    // const tl = new TimelineLite();
-    this.config.tl.to(this.dom.nav, 0.5, { boxShadow: "0px 0px 8px rgba(0, 0, 0, 0.6)", y: 0 });
+    TweenLite.to(this.dom.nav, 0.6, { ease: Power3.easeOut, boxShadow: "0px 0px 8px rgba(0, 0, 0, 0.6)", y: 0, force3D: true });
   },
   scrollDown: function scrollDown(height) {
-    console.log('scrollDown');
-    this.config.tl.to(this.dom.nav, 0.5, { boxShadow: "0px 0px 8px rgba(0, 0, 0, 0)", y: -height });
+    TweenLite.to(this.dom.nav, 0.6, { ease: Power3.easeIn, boxShadow: "0px 0px 8px rgba(0, 0, 0, 0)", y: -height, force3D: true });
   },
   hasScrolled: function hasScrolled() {
     //fn config
@@ -48,32 +42,26 @@ var Navigation = {
         scrollUp = wScroll < this.config.lastScrollTop,
         scrollDown = wScroll > this.config.lastScrollTop,
         // && wScroll > this.dom.navHeight;  //???!!!
-    directionHasChanged = this.config.lastScrollUp !== scrollUp || this.config.lastScrollDown !== scrollDown;
-    //scroll more then delta
+    directionChanged = this.config.lastScrollUp !== scrollUp || this.config.lastScrollDown !== scrollDown;
+
     if (scrollNotEnough) {
       return;
     }
-
-    //first condition detecting scroll-down
-    if (directionHasChanged && scrollDown) {
+    //detecting scroll-down
+    if (directionChanged && scrollDown) {
       this.scrollDown(height);
     }
-    //scroll-up
-    if (directionHasChanged && scrollUp) {
+    //detecting scroll-up
+    if (directionChanged && scrollUp) {
       this.scrollUp();
     }
 
     this.config.lastScrollTop = wScroll;
     this.config.lastScrollUp = scrollUp;
     this.config.lastScrollDown = scrollDown;
-    console.log('scrollUp: ' + scrollUp + ', scrollDown: ' + scrollDown + ', directionChanged: ' + directionHasChanged);
-
-    // console.log(`WINDOW has scrolled: ${wScroll}px`);
   },
   scrollHandler: function scrollHandler() {
     this.config.didScroll = true;
-
-    // console.log(`didScroll(scrollHandler): ${this.config.didScroll}`);
   },
   attachListener: function attachListener(el, handler) {
     var ev = arguments.length <= 2 || arguments[2] === undefined ? 'click' : arguments[2];
@@ -89,13 +77,7 @@ var Navigation = {
       return console.log("something happens");
     });
     this.addSetInterval();
-    // console.log(this.config.tl);
   }
 };
 
 Navigation.init();
-
-// menu.attachListener(window, 'scroll', menu.scrollHandler);
-// menu.attachListener(menu.dom.header, 'click', () => console.log('click'));
-// menu.check();
-// menu.addSetInterval();
