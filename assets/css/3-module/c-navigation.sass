@@ -1,0 +1,39 @@
+body
+  font-family: sans-serif
+
+main
+  height: 500vh
+  background-color: lighten(grey, 45%)
+
+a
+  color: grey
+  text-decoration: none
+  transition: color .22s ease-out
+  font-size: 1rem
+  padding: 1.25em 0.5em 1.25em
+  font-variant: small-caps
+  display: block
+  font-weight: bold
+  &:hover
+    color: black
+
+.c-nav
+  box-shadow: 0 0 8px rgba(black, .6)
+  background-color: white
+  display: flex
+  font-weight: bold
+  justify-content: space-between
+  padding: 0 1rem
+  width: 100%
+  position: fixed
+  top: 0
+  left: 0
+  //transform: translateY(-40px)
+
+.c-nav__title
+  display: flex
+  align-items: center
+  font-size: 1.5rem
+
+.c-nav__list
+  display: flex

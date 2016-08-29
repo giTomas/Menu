@@ -2,15 +2,28 @@ doctype html
 html(lang="sk")
   head
     meta(charset="UTF-8")
-    meta(name="description", content="")
+    meta(name="description", content="responsive navigation")
     meta(name="author", content="giTo")
     meta(name="viewport", content="width=device-width, initial-scale=1")
     title index
     link(rel="stylesheet", href="main.css")
   body
-    header#js-header
+    //- header#js-header
+    nav#js-nav.c-nav
+      .c-nav__title
+        h2 Extraordinary webPage
+      .c-nav__ctrls 
+        #js-nav-open.c-nav__ctrls--open
+        #js-nav-close.c-nav__ctrls--close
+      ul.c-nav__list
+        li.c-nav__list--item
+          a(href="") Home
+        li.c-nav__list--item
+          a(href="") About
+        li.c-nav__list--item
+          a(href="") Contact
     main
     footer
 
     script(src="js/TweenMax.min.js")
-    script(src="js/app.js")
+    script(src="js/navigation.js")
