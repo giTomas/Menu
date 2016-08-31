@@ -5,7 +5,7 @@
 
 const Navigation = {
   config: {
-    // tl: new TimelineLite(),
+    tl: new TimelineLite(),
     didScroll: false,
     delta: 5,
     lastScrollTop: 0,
@@ -14,11 +14,17 @@ const Navigation = {
   },
   dom: {
       nav: document.getElementById('js-nav'),
-      navHeight: parseFloat(getComputedStyle(document.getElementById('js-nav', null)).height.split('px')[0]),
-      boxShadow: parseFloat(getComputedStyle(document.getElementById('js-nav', null)).boxShadow[27]),
+      // navHeight: parseFloat(getComputedStyle(document.getElementById('js-nav'), null).height.split('px')[0]),
+      // boxShadow: parseFloat(getComputedStyle(document.getElementById('js-nav'), null).boxShadow[27]),
       navOpen: document.getElementById('js-nav-open'),
-      navClose: document.getElementById('js-nav-close')
+      navClose: document.getElementById('js-nav-close'),
+      menu: document.getElementById('js-menu')
     },
+  getHeight: function(){
+    const height = parseFloat(getComputedStyle(this.dom.nav).height.split('px')[0]);
+    const boxShadow = parseFloat(getComputedStyle(this.dom.nav).boxShadow[27]);
+    return height + boxShadow;
+  },
   callbackSetInterval: function(){
     if (this.config.didScroll) {
       this.config.didScroll = false;
@@ -28,20 +34,31 @@ const Navigation = {
   addSetInterval: function(){
     setInterval(this.callbackSetInterval.bind(this), 250)
   },
-  scrollUp: function(){
-    TweenLite.to(this.dom.nav, 0.6, { ease: Power3.easeOut, boxShadow: "0px 0px 8px rgba(0, 0, 0, 0.6)", y: 0, force3D: true})
+  //animations
+  animScrollUp: function(){
+    TweenLite.to(this.dom.nav, 0.6, { ease: Power3.easeOut, boxShadow: "0px 0px 8px rgba(0, 0, 0, 0.6)", y: 0, opacity: 1, force3D: true})
   },
-  scrollDown: function(height){
-    TweenLite.to(this.dom.nav, 0.6, { ease: Power3.easeIn, boxShadow: "0px 0px 8px rgba(0, 0, 0, 0)", y: -height, force3D: true});
+  animScrollDown: function(height){
+    TweenLite.to(this.dom.nav, 0.6, { ease: Power3.easeIn, boxShadow: "0px 0px 8px rgba(0, 0, 0, 0)", y: -height, opacity: 0.1, force3D: true});
+  },
+  animFadeIcon: function(el1, el2){
+    this.config.tl.to(el1, 0.22, {ease: Power3.easeIn, opacity: 0, scale: 0, display: "none"})
+                  .to(el2, 0.22, {ease: Power3.easeOut, opacity: 1, scale: 1, display: "block"});
+  },
+  animOpenMenu: function(){
+    TweenLite.set(this.dom.menu, {display: "flex"});
+  },
+  animCloseMenu: function(){
+    TweenLite.set(this.dom.menu, {clearProps: "all"});
   },
   hasScrolled: function(){
     //fn config
-    let wScroll          = window.scrollY,
-        scrollNotEnough  = Math.abs(this.config.lastScrollTop - wScroll) <= this.config.delta,
-        height           = this.dom.navHeight + this.dom.boxShadow,
-        scrollUp         = wScroll < this.config.lastScrollTop,
-        scrollDown       = wScroll > this.config.lastScrollTop,  // && wScroll > this.dom.navHeight;  //???!!!
-        directionChanged = this.config.lastScrollUp !== scrollUp || this.config.lastScrollDown !== scrollDown;
+    const wScroll          = window.scrollY;
+    const scrollNotEnough  = Math.abs(this.config.lastScrollTop - wScroll) <= this.config.delta;
+    const height           = this.getHeight();
+    const scrollUp         = wScroll < this.config.lastScrollTop;
+    const scrollDown       = wScroll > this.config.lastScrollTop;  // && wScroll > this.dom.navHeight;  //???!!!
+    const directionChanged = this.config.lastScrollUp !== scrollUp || this.config.lastScrollDown !== scrollDown;
 
 
     if (scrollNotEnough) {
@@ -49,19 +66,29 @@ const Navigation = {
     }
     //detecting scroll-down
     if(directionChanged && scrollDown){
-      this.scrollDown(height);
+      this.animScrollDown(height);
     }
     //detecting scroll-up
     if(directionChanged && scrollUp){
-      this.scrollUp();
+      this.animScrollUp();
     }
 
     this.config.lastScrollTop = wScroll;
     this.config.lastScrollUp  = scrollUp;
     this.config.lastScrollDown  = scrollDown;
   },
-  scrollHandler: function(){
+  scrollHandler: function() {
     this.config.didScroll = true;
+  },
+  openHandler: function() {
+    console.log('open');
+    this.animFadeIcon(this.dom.navOpen, this.dom.navClose);
+    this.animOpenMenu();
+  },
+  closeHandler: function() {
+    console.log('close');
+    this.animFadeIcon(this.dom.navClose, this.dom.navOpen);
+    this.animCloseMenu();
   },
   attachListener: function(el, handler, ev='click') {
         el.addEventListener(ev, handler, false);
@@ -71,8 +98,11 @@ const Navigation = {
       return;
     }
     this.attachListener(window, this.scrollHandler.bind(this), 'scroll');
-    this.attachListener(this.dom.nav, ()=>console.log("something happens"));
+    // this.attachListener(this.dom.nav, ()=>console.log("something happens"));
+    this.attachListener(this.dom.navOpen, this.openHandler.bind(this));
+    this.attachListener(this.dom.navClose, this.closeHandler.bind(this));
     this.addSetInterval();
+    // console.log(this.getHeight());
   }
 };
 
